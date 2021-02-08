@@ -1,0 +1,90 @@
+html {
+    font-size: 14;
+    color: white;
+}
+
+h1,h2,h3,h4,h5,h6,p,body {
+    margin: 0;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(75, 75, 161);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.content {
+    width: 20%;
+    height: 40%;
+    padding: 15px;
+    margin-right: 25px;
+    border-radius: 5px;
+    background-color: rgb(39, 39, 145);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.input {
+    width:auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.input div {
+    margin: 2px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+input, button {
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    height: 25px;
+}
+
+#button {
+    margin-top: 10px;
+    background-color: rgb(92, 160, 25);
+}
+
+#delete {
+    margin-top: 2px;
+    background-color: crimson;
+}
+
+#liste2 {
+    margin-left: 25px;
+    height: 50%;
+    overflow-y: scroll;
+    width: 20%;
+    background-color: white;
+}
+
+#table {
+    background-color: white;
+    padding: 15px;
+    width: 15%;
+    height: 40%;
+    overflow-y: scroll;
+    border-radius: 5px;
+}
+
+#table::-webkit-scrollbar {
+    display: none;
+}
+
+p {
+    color: black;
+}

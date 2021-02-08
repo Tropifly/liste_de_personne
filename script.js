@@ -21,14 +21,17 @@ function addGuest() {
     if (nom == "" || lastName == "") {
         document.getElementById("caution").innerHTML = "veuillez remplir tous champs"
     } else {
+        var info = nom.toUpperCase() + " " + lastName.capitalize()
         // vide le text d'erreur
         document.getElementById("caution").innerHTML = "";
         // ajoute la personne au tableau
-        array.push(nom.toUpperCase() + " " + lastName.capitalize());
-        // trie la tableau par ordre alpabetique //! a mettre en option avec un check box
-        array.sort();
-        // affiche le tableau
-        document.getElementById("liste2").innerHTML = array.join()
+        array.push(info);
+        // recupere l'index de l'element
+        var indexElm = array.indexOf(info)
+        // ajoute un paragraphe avec l'id correspondant
+        document.getElementById("table").appendChild(document.createElement("p")).id = indexElm
+        // ajoute les info dans le paragraphe
+        document.getElementById(indexElm).innerHTML = info
         // affiche le nombre de personnes
         number.innerHTML = array.length;
         // vide les champs de saisi
@@ -37,8 +40,8 @@ function addGuest() {
 
         // Transformation en de ul en liste triée (Jquery)
         $(document).ready(function () {
-            $('#liste').html(
-                $('#liste li')
+            $('#table').html(
+                $('#table p')
                 .get()
                 .sort(function (a, b) {
                     return (a.innerHTML.replace(/^\s*/, '').toLowerCase() >= b.innerHTML.replace(/^\s*/, '').toLowerCase()) ? 1 : -1;
@@ -53,11 +56,14 @@ function delGuest() {
     // recupere les infos
     var supprNom = document.getElementById("name").value;
     var supprPrenom = document.getElementById("lastname").value;
+    var tab = document.getElementById("table");
 
     // concatenation nom et prenom
     var sup = supprNom.toUpperCase() + " " + supprPrenom.capitalize();
     // recuperation de l'index
     var place = array.indexOf(sup);
+    // log test
+    console.log(place);
 
     // si les champs sont vide, demande de remplissage
     if (supprNom == "" || supprPrenom == "") {
@@ -72,12 +78,14 @@ function delGuest() {
         document.getElementById("name").value = "";
         document.getElementById("lastname").value = "";
     } else {
-        // supression de la personne
-        array.splice(place, 1);
-        // affiche du tableau actualiser
-        document.getElementById("liste2").innerHTML = array.join();
+        console.log(document.getElementById(place));
+        tab.removeChild(document.getElementById(place))
+        // supression de la personne dans le tableau html
+        array.splice(place, 1); 
         // affichage du nombre de personne
         number.innerHTML = array.length;
+        // vide le text d'erreur
+        document.getElementById("caution").innerHTML = "";
         // vide les champs de saisi
         document.getElementById("name").value = "";
         document.getElementById("lastname").value = "";
