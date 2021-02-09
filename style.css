@@ -19,7 +19,7 @@ body {
 }
 
 .content {
-    width: 20%;
+    width: 20% auto;
     height: 40%;
     padding: 15px;
     margin-right: 25px;

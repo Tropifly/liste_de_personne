@@ -6,6 +6,9 @@ var number = document.getElementById("number");
 // contient les informations des personnes
 var array = []
 
+// désactive le bouton ajouter
+add.setAttribute("disabled", "")
+
 // première lettre en majuscule
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
@@ -64,8 +67,6 @@ function delGuest() {
     var sup = supprNom.toUpperCase() + " " + supprPrenom.capitalize();
     // recuperation de l'index
     var place = array.indexOf(sup);
-    // log test
-    console.log(place);
 
     // applique le style
     document.getElementById(place).style.border = "none";
@@ -84,7 +85,6 @@ function delGuest() {
         document.getElementById("name").value = "";
         document.getElementById("lastname").value = "";
     } else {
-        console.log(document.getElementById(place));
         tab.removeChild(document.getElementById(place))
         // supression de la personne dans le tableau html
         array.splice(place, 1);
@@ -98,8 +98,8 @@ function delGuest() {
     }
 }
 
-// verifie la presence de la personne
-function searchGuest() {
+// cherche la presence de la personne
+function search() {
     var nom = document.getElementById("name").value;
     var prenom = document.getElementById("lastname").value;
     // concatenation nom et prenom
@@ -108,10 +108,10 @@ function searchGuest() {
     var place = array.indexOf(info);
     // recupere le bouton
     var add = document.getElementById("button");
-    console.log(place);
 
+    // si personne existe, ammene a son index
     if (place < 0) {
-        console.log("test");
+        // active le bouton ajouter
         add.removeAttribute("disabled", "")
         $("p").css("border", "none")
         $("p").css("textAlign", "left")
@@ -127,20 +127,44 @@ function searchGuest() {
     }
 }
 
-// verifie la presence de la personne
-function verify() {
-    // verifie la presence de la personne
+// verifie le contenue du champs de saisie
+function verification() {
     var nom = document.getElementById("name");
     var prenom = document.getElementById("lastname");
 
+    var regTest = /[^a-zA-Zùçàèé-]/g // tt ce qui n'est pas une lettre
+
     nom.addEventListener("input", function () {
-        searchGuest()
+        // active le bouton ajouter
+        add.removeAttribute("disabled", "")
+        // si presence d'un chiffre ou caractere interdit
+        if (regTest.test(nom.value)) {
+            document.getElementById("name").style.backgroundColor = "red"
+            document.getElementById("caution").innerHTML = "chiffre et espace non pris en charge";
+            // désactive le bouton ajouter
+            add.setAttribute("disabled", "")
+        } else {
+            document.getElementById("name").style.backgroundColor = "white"
+            search()
+        }
     })
 
     prenom.addEventListener("input", function () {
-        searchGuest()
-    }) //! a finir
+        // active le bouton ajouter
+        add.removeAttribute("disabled", "")
+        if (regTest.test(prenom.value)) {
+            document.getElementById("lastname").style.backgroundColor = "red"
+            document.getElementById("caution").innerHTML = "chiffre et espace non pris en charge";
+            // désactive le bouton ajouter
+            add.setAttribute("disabled", "")
+        } else {
+            document.getElementById("lastname").style.backgroundColor = "white"
+            search()
+        }
+    })
 }
+
+verification()
 
 // détecte le clic sur le bouton "ajouter" et appel la fonction
 add.addEventListener("click", function () {
@@ -152,8 +176,6 @@ suppr.addEventListener("click", function () {
     delGuest()
 })
 
-// appel la fonction qui verify la presence de la personne
-verify()
 
 // détecte l'appui sur la touche entrée pour valide la saisi (Jquery)
 $(document).on("keypress", "input", function (e) {
